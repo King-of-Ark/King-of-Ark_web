@@ -10,9 +10,17 @@ class Player {
 
 		this.isKing = false;
 		this.isDead = false;
+		this.isFighting = false;
 
 		this.actionProperties = this.createActionProperties();
+		this.nextActionpropertyIndex = 0; //index of the last used action property
 		this.health = helper.getCharacterAppearance(this.transaction.getVendorField(), '+');
+		this.maxHealth = this.health;
+		this.healthRegen = helper.getCharacterAppearance(this.transaction.getVendorField(), '*');
+		this.visionRange = 4;
+
+		this.addAfterTurns = 5;
+		this.addInTurn = 0;
 
 		this.x = this.getSpawnFieldX();
 		this.y = this.getSpawnFieldY();
@@ -68,5 +76,47 @@ class Player {
 
 		let numbersInTransactionID = helper.getNumbers(this.transaction.getId());
 		return helper.getIntRrangeFromString(numbersInTransactionID, numbersInTransactionID.length - 2, 2);
+	}
+
+	/*
+		regenerate health based on the health regenaration (*)
+	*/
+	regenerateHealth() {
+		this.health += this.healthRegen;
+
+		if(this.health > this.maxHealth) {
+			this.health = this.maxHealth;
+		}
+
+		console.log(this.id + ": regenerated " + this.healthRegen + " health. Health left = " + this.health);
+	}
+
+	/*
+		Deals damage to the player
+		returns true if the given damage 'killed' the player
+	*/
+	giveDamage(damage) {
+		console.log(this.id + ": received " + damage + " damage. Health left = " + (this.health - damage));
+		
+		this.health -= damage;
+
+		if(this.health <= 0) {
+			this.health = 0;
+			this.isDead = true;
+			console.log(this.id + ": died!");
+		} 
+
+		return this.isDead;
+	}
+
+	move(newX, newY, fieldWidth, fieldHeight) {
+		console.log(this.id + ": moves from " + this.x + "/" + this.y + " to: " + newX + "/" + newY);
+
+		let helper = new Helper();
+
+		this.x = newX;
+		this.y = newY;
+		this.graphic.x = helper.xFieldToPixels(newX, fieldWidth);
+		this.graphic.y = helper.yFieldToPixels(newY, fieldHeight);
 	}
 }

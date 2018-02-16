@@ -47,4 +47,18 @@ class Helper {
 
 	}
 
+	/*
+		calculates the starting x in pixel based on the field x index
+	*/
+	xFieldToPixels(index, fieldWidth) {
+		return index * fieldWidth;
+	}
+
+	/*
+		calculates the starting y in pixel based on the field y index
+	*/
+	yFieldToPixels(index, fieldHeight) {
+		return index * fieldHeight;
+	}
+
 }
