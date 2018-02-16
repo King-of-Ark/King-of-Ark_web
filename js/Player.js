@@ -13,11 +13,11 @@ class Player {
 		this.isFighting = false;
 
 		this.actionProperties = this.createActionProperties();
-		this.nextActionpropertyIndex = 0; //index of the last used action property
+		this.nextActionpropertyIndex = 0; 
 		this.health = helper.getCharacterAppearance(this.transaction.getVendorField(), '+');
 		this.maxHealth = this.health;
 		this.healthRegen = helper.getCharacterAppearance(this.transaction.getVendorField(), '*');
-		this.visionRange = 4;
+		this.visionRange = 8;
 
 		this.addAfterTurns = 5;
 		this.addInTurn = 0;
