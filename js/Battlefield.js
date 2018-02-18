@@ -110,9 +110,7 @@ class Battlefield {
 						if(fightResult === 1 ) {
 							//Do we have a new king ?
 							if(closestPlayer.isKing) {
-								this.players[player].isKing = true;
-								this.players[player].lastUsedActionProperty = 0; //reset his action proeprties
-								this.currentKing = this.players[player];
+                                this.setPlayerKing(this.players[player]);
 							}
 
 							this.players[player].isFighting = false;
@@ -182,10 +180,25 @@ class Battlefield {
 	killPlayer(player) {
 		this.remove(player);
 		delete this.players[player.id];
+        
+        let gameStatsTable = new GameStatsTable();
+        gameStatsTable.setPlayerDead(player.id);
 
 		let deadBody = new DeadBody(player.x, player.y);
 		this.add(deadBody);
 	}
+    
+    /*
+        sets the player to be the new king
+    */
+    setPlayerKing(player) {
+        player.isKing = true;
+        player.lastUsedActionProperty = 0; //reset his action proeprties
+        this.currentKing = player;
+        
+        let gameStatsTable = new GameStatsTable();
+        gameStatsTable.setPlayerKing(player.id);
+    }
 
 	/*
 		returns the shortest path between two objects
@@ -238,8 +251,7 @@ class Battlefield {
 	    if(object.constructor.name === 'Player') {
 	    	console.log(object.id + ": added to game");
 	    	if(Object.keys(this.players).length === 0) {
-	    		object.isKing = true;
-	    		this.currentKing = object;
+                this.setPlayerKing(object);
 	    	}
 
 	    	this.players[object.id] = object;

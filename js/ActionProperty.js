@@ -3,18 +3,23 @@ class ActionProperty {
 		switch(symbol) {
 			case 'R':
 				this.action = "ROCK";
+                this.symbol = 'R';
 				break;
 			case 'P':
 				this.action = "PAPER";
+                this.symbol = 'P';
 				break;
 			case 'S':
 				this.action = "SCISSORS";
+                this.symbol = 'S';
 				break;
 			case 'L':
 				this.action = "LIZARD";
+                this.symbol = 'L';
 				break;
 			case 'O':
 				this.action = "SPOCK";
+                this.symbol = 'S';
 				break;
 		}
 

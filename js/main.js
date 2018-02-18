@@ -1,7 +1,7 @@
 
 var battlefield;
 
-function main() {
+function main(gameStats) {
     let type = "WebGL"
     if(!PIXI.utils.isWebGLSupported()){
       type = "canvas"
@@ -26,16 +26,18 @@ function pullTransactions(walletAddress) {
     		battlefield = new Battlefield(helper.getIntRrangeFromString(numbersInWalletAddress,0,2), helper.getIntRrangeFromString(numbersInWalletAddress,2,2), 10, 10);
     		//battlefield = new Battlefield(99, 99, 5, 5);
     		battlefield.create();
-
     		
     		//add the stones from the first entry
     		battlefield.createStones(new ArkTransaction(receivedTransactions[0]));		
 
-    		//add the players
+    		//add the players to the battlefield and to the gameStats
+            let gameStatsTable = new GameStatsTable();
     		for(let i=0;i<receivedTransactions.length;i++) {
     			//only add transactions with a vendorField
     			if(receivedTransactions[i].vendorField != null) {
-    				battlefield.add(new Player(new ArkTransaction(receivedTransactions[i])));
+                    let player = new Player(new ArkTransaction(receivedTransactions[i]));
+                    gameStatsTable.addPlayer(player);
+    				battlefield.add(player);
     			}
     		}
 
