@@ -4,7 +4,7 @@ Work in progress
 
 ## How to add a entry?
 
-Send a valid entry transaction to `DDngx2bLTDQ1mn1qwecsahfe6jGxn2KPhm`
+Send a valid entry transaction to `DDngx2bLTDQ1mn1qwecsahfe6jGxn2KPhm` on the Ark TestNet!
 
 ## What is a valid entry ? 
 
