@@ -10,7 +10,6 @@ class Player {
 
 		this.isKing = false;
 		this.isDead = false;
-		this.isFighting = false;
 
 		this.actionProperties = this.createActionProperties();
 		this.nextActionpropertyIndex = 0; 
@@ -18,6 +17,7 @@ class Player {
 		this.maxHealth = this.health;
 		this.healthRegen = helper.getCharacterAppearance(this.transaction.getVendorField(), '*');
 		this.visionRange = 8;
+        this.kills = 0;
 
 		this.addAfterTurns = 5;
 		this.addInTurn = 0;
@@ -89,6 +89,7 @@ class Player {
 		}
 
 		console.log(this.id + ": regenerated " + this.healthRegen + " health. Health left = " + this.health);
+        GameStatsTable.setPlayerHealth(this.id, this.health, this.maxHealth);
 	}
 
 	/*
@@ -104,7 +105,9 @@ class Player {
 			this.health = 0;
 			this.isDead = true;
 			console.log(this.id + ": died!");
-		} 
+		}
+        
+        GameStatsTable.setPlayerHealth(this.id, this.health, this.maxHealth);
 
 		return this.isDead;
 	}

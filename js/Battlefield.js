@@ -79,7 +79,7 @@ class Battlefield {
 				//First turn!
 				//Start with moving the players
 				for(var player in this.players) {
-					if(!this.players[player].isKing && !this.players[player].isFighting) {
+					if(!this.players[player].isKing) {
 						//move the players (except the king)
 						let pathToKing = this.getShortestPath(this.players[player], this.currentKing);
 						if(this.isPlayerTraped(pathToKing)) {
@@ -101,9 +101,6 @@ class Battlefield {
 					if(closestPlayerResult.distance-2 < this.players[player].visionRange) {
 						let closestPlayer = closestPlayerResult.player;
 
-						this.players[player].isFighting = true;
-						closestPlayer.isFighting = true;
-
 						let fight = new Fight(this.players[player], closestPlayer);
 						let fightResult = fight.getFightResult();
 
@@ -113,7 +110,8 @@ class Battlefield {
                                 this.setPlayerKing(this.players[player]);
 							}
 
-							this.players[player].isFighting = false;
+                            this.players[player].kills += 1;
+                            GameStatsTable.setPlayerKills(this.players[player].id, this.players[player].kills);
 							this.killPlayer(closestPlayer);
 						} else if(fightResult === -1){
 							if(this.players[player].isKing) {
@@ -122,7 +120,8 @@ class Battlefield {
 								this.currentKing = closestPlayer;
 							}
 
-							closestPlayer.isFighting = false;
+                            closestPlayer.kills += 1;
+                            GameStatsTable.setPlayerKills(closestPlayer.id, closestPlayer.kills);
 							this.killPlayer(this.players[player]);
 						} 
 					}
@@ -181,8 +180,7 @@ class Battlefield {
 		this.remove(player);
 		delete this.players[player.id];
         
-        let gameStatsTable = new GameStatsTable();
-        gameStatsTable.setPlayerDead(player.id);
+        GameStatsTable.setPlayerDead(player.id);
 
 		let deadBody = new DeadBody(player.x, player.y);
 		this.add(deadBody);
@@ -196,8 +194,7 @@ class Battlefield {
         player.lastUsedActionProperty = 0; //reset his action proeprties
         this.currentKing = player;
         
-        let gameStatsTable = new GameStatsTable();
-        gameStatsTable.setPlayerKing(player.id);
+        GameStatsTable.setPlayerKing(player.id);
     }
 
 	/*
@@ -253,8 +250,13 @@ class Battlefield {
 	    	if(Object.keys(this.players).length === 0) {
                 this.setPlayerKing(object);
 	    	}
-
+            
 	    	this.players[object.id] = object;
+            
+            if(object.maxHealth <= 0) {
+                this.killPlayer(object);
+            }
+
 	    } else if(object.constructor.name === 'Stone') {
 	    	this.pathBlockers[Object.keys(this.pathBlockers).length] = object;
 	    }
