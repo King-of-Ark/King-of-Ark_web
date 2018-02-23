@@ -7,14 +7,6 @@ class Battlefield {
 		fieldHeight: height of one field in [pixels]
 	*/
 	constructor(width, height, fieldWidth, fieldHeight) {
-		if(width < 70) {
-			width += 70;
-		}
-
-		if(height < 70) {
-			height +=70;
-		}
-
 		this.width = width;
 		this.fieldWidth = fieldWidth;
 		this.pixelWidth = this.width * this.fieldWidth;
@@ -33,14 +25,6 @@ class Battlefield {
 		this.turnRounds = 1; //1 gameround consists of 10 turns
 
 		this.gameRunning = false;
-	}
-
-	getWidth() {
-		return this.width;
-	}
-
-	getHeight() {
-		return this.height;
 	}
 
 	/*
@@ -247,6 +231,7 @@ class Battlefield {
 
 	    if(object.constructor.name === 'Player') {
 	    	console.log(object.id + ": added to game");
+	    	
 	    	if(Object.keys(this.players).length === 0) {
                 this.setPlayerKing(object);
 	    	}
