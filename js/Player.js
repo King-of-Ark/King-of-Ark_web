@@ -51,7 +51,14 @@ class Player {
 
 		let actionProperties = [];
 		for(let i=0; i<actionString.length; i++) {
-			let actionProperty = new ActionProperty(actionString[i], helper.getIntRrangeFromString(damageString, i, 1))
+
+			if(i >= damageString.length) {
+				var damage = helper.getIntRrangeFromString(damageString, i-damageString.length, 1);
+			} else {
+				damage = helper.getIntRrangeFromString(damageString, i, 1);
+			}
+			
+			let actionProperty = new ActionProperty(actionString[i], damage)
 			actionProperties.push(actionProperty);
 		}
 
