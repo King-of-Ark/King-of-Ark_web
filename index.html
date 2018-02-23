@@ -38,10 +38,62 @@
             </tbody>
         </table>
       </div>
+      <div class="row">
+         <table class="table table-responsive col" id="legend">
+            <thead>
+                <tr>
+                    <th scope="col">Damage</th>
+                    <th scope="col">Color</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td><td><font id='damge0'>color</font></td>
+              </tr>
+              <tr>
+                <td>1</td><td><font id='damge1'>color</font></td>
+              </tr>
+                <tr>
+                <td>2</td><td><font id='damge2'>color</font></td>
+              </tr>
+              <tr>
+                <td>3</td><td><font id='damge3'>color</font></td>
+              </tr>
+              <tr>
+                <td>4</td><td><font id='damge4'>color</font></td>
+              </tr>
+              <tr>
+                <td>5</td><td><font id='damge5'>color</font></td>
+              </tr>
+              <tr>
+                <td>6</td><td><font id='damge6'>color</font></td>
+              </tr>
+              <tr>
+                <td>7</td><td><font id='damge7'>color</font></td>
+              </tr>
+              <tr>
+                <td>8</td><td><font id='damge8'>color</font></td>
+              </tr>
+              <tr>
+                <td>9</td><td><font id='damge9'>color</font></td>
+              </tr>
+            </tbody>
+      </div>
     </div>
     
     <script type="text/javascript">
             main(); 
+
+            document.getElementById("damge0").color = GameStatsTable.getHeathmapColor(0);
+            document.getElementById("damge1").color = GameStatsTable.getHeathmapColor(1);
+            document.getElementById("damge2").color = GameStatsTable.getHeathmapColor(2);
+            document.getElementById("damge3").color = GameStatsTable.getHeathmapColor(3);
+            document.getElementById("damge4").color = GameStatsTable.getHeathmapColor(4);
+            document.getElementById("damge5").color = GameStatsTable.getHeathmapColor(5);
+            document.getElementById("damge6").color = GameStatsTable.getHeathmapColor(6);
+            document.getElementById("damge7").color = GameStatsTable.getHeathmapColor(7);
+            document.getElementById("damge8").color = GameStatsTable.getHeathmapColor(8);
+            document.getElementById("damge9").color = GameStatsTable.getHeathmapColor(9);
     </script>
 </body>
 </html>

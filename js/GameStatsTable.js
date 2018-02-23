@@ -22,7 +22,14 @@ class GameStatsTable {
         idCell.innerHTML = "TODO";
         
         let propCell = row.insertCell(1);
-        propCell.innerHTML = actionProperties;
+        propCell.innerHTML = "";
+        for(let i=0; i<player.actionProperties.length;i++) {
+            if(player.actionProperties[i].action !== "HEALTH") {
+                propCell.innerHTML += "<font color='"+GameStatsTable.getHeathmapColor(player.actionProperties[i].damage)+"'> "+player.actionProperties[i].symbol+"</font>";
+            } else {
+                propCell.innerHTML += "<font color='#979899'>" + player.actionProperties[i].symbol + "</font>";
+            }
+        }
         
         let killCell = row.insertCell(2);
         killCell.innerHTML = kills
@@ -57,5 +64,25 @@ class GameStatsTable {
         let table = document.getElementById("gameStatsTable");
         let cells = table.rows.namedItem(playerID).cells;
         cells[3].innerHTML = currentHealth + "/" + maxHealth;
+    }
+
+    /*
+        returns a color for a number between 0 and 9
+        0 lowest value
+        9 highest value
+    */
+    static getHeathmapColor(number) {
+        switch(number) {
+            case 0: return "#99c2ff";
+            case 1: return "#66a3ff";
+            case 2: return "#3385ff";
+            case 3: return "#0066ff";
+            case 4: return "#0052cc";
+            case 5: return "#ffad99";
+            case 6: return "#ff8566";
+            case 7: return "#ff5c33";
+            case 8: return "#ff3300";
+            case 9: return "#cc2900";
+        }
     }
 }
