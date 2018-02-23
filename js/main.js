@@ -22,7 +22,7 @@ function pullTransactions(walletAddress) {
     		let helper = new Helper();
 
     		//init the battlefield
-    		battlefield = new Battlefield(100, 100, 7, 7);
+    		battlefield = new Battlefield(100, 100, 8, 8);
     		battlefield.create();
     		
     		//add the stones from the first entry

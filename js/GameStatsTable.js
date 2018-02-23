@@ -19,7 +19,8 @@ class GameStatsTable {
         row.id = transactioID;
         
         let idCell = row.insertCell(0);
-        idCell.innerHTML = "TODO";
+        idCell.innerHTML = "<canvas data-jdenticon-value='"+transactioID+"' width='30'height='30' id='idCanvas" + transactioID+ "'></canvas>";
+        jdenticon.update("#idCanvas" + transactioID+ "", transactioID);
         
         let propCell = row.insertCell(1);
         propCell.innerHTML = "";

@@ -30,10 +30,13 @@ class Player {
 		creates a pixi graphic for this object
 	*/
 	createGraphic(fieldWidth, fieldHeight) {
-		this.graphic = new PIXI.Graphics();
-	    this.graphic.beginFill(0x66CCFF);
-	    this.graphic.drawRect(0, 0, fieldWidth, fieldHeight);
-	    this.graphic.endFill();
+		let canvas = document.getElementById('idCanvas' + this.id);
+		
+
+		this.graphic = new PIXI.Sprite(PIXI.Texture.fromCanvas(canvas));
+		let scaleX = 0.4;
+
+		this.graphic.setTransform(0,0,scaleX,scaleX,0,0,0,0,0);
 	}
 
 	/*
