@@ -21,6 +21,10 @@ class ActionProperty {
 				this.action = "SPOCK";
                 this.symbol = 'S';
 				break;
+			case 'H':
+				this.action = "HEALTH";
+                this.symbol = 'H';
+				break;
 		}
 
 		this.damage = damage
@@ -40,26 +44,28 @@ class ActionProperty {
 	*/
 	winsAgainst(otherActionProperty) {
 		if(this.action === "ROCK") {
-			if(otherActionProperty.action === "SCISSORS" || otherActionProperty.action === "LIZARD") {
+			if(otherActionProperty.action === "SCISSORS" || otherActionProperty.action === "LIZARD" || otherActionProperty.action === "HEALTH") {
 				return true;
 			} 
 		} else if(this.action === "PAPER") {
-			if(otherActionProperty.action === "SPOCK" || otherActionProperty.action === "ROCK") {
+			if(otherActionProperty.action === "SPOCK" || otherActionProperty.action === "ROCK" || otherActionProperty.action === "HEALTH") {
 				return true;
 			} 
 		} else if(this.action === "SCISSORS") {
-			if(otherActionProperty.action === "PAPER" || otherActionProperty.action === "LIZARD") {
+			if(otherActionProperty.action === "PAPER" || otherActionProperty.action === "LIZARD" || otherActionProperty.action === "HEALTH") {
 				return true;
 			} 
 		} else if(this.action === "LIZARD") {
-			if(otherActionProperty.action === "PAPER" || otherActionProperty.action === "SPOCK") {
+			if(otherActionProperty.action === "PAPER" || otherActionProperty.action === "SPOCK" || otherActionProperty.action === "HEALTH") {
 				return true;
 			} 
 		} else if(this.action === "SPOCK") {
-			if(otherActionProperty.action === "SCISSORS" || otherActionProperty.action === "ROCK") {
+			if(otherActionProperty.action === "SCISSORS" || otherActionProperty.action === "ROCK" || otherActionProperty.action === "HEALTH") {
 				return true;
 			} 
-		} 
+		} else if(this.action === "HEALTH") {
+			return false; //H cant win
+		}
 
 		return false;
 	}
