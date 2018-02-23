@@ -60,80 +60,73 @@ class Battlefield {
 			this.gameRunning = false;
 		}
 
-		if(this.ticker % 2 === 0) {
-			console.log("TURN: " + this.turnRounds + " ROUND: " + this.gameRound);
+		
+		console.log("TURN: " + this.turnRounds + " ROUND: " + this.gameRound);
 
-			if(this.turnRounds === 1) {
-				//First turn!
-				//Start with moving the players
-				for(var player in this.players) {
-					if(!this.players[player].isKing) {
-						//move the players (except the king)
-						let pathToKing = this.getShortestPath(this.players[player], this.currentKing);
-						if(this.isPlayerTraped(pathToKing)) {
-							//player is traped ->  bad luck for him -> he gets killed
-							this.killPlayer(this.players[player]);
-							console.log("player is traped ->  bad luck for him -> he gets killed");
-						} else {
-							this.players[player].move(pathToKing[1][0], pathToKing[1][1], this.fieldWidth, this.fieldHeight);
-						}
-					}
-				}
-			}
-
-			//players start to fight or continue to fight
+		if(this.turnRounds === 1) {
+			//First turn!
+			//Start with moving the players
 			for(var player in this.players) {
 				if(!this.players[player].isKing) {
-					// is there another player in range to attack ?
-					let closestPlayerResult = this.getClosestPlayer(this.players[player]);
-					if(closestPlayerResult.distance-2 < this.players[player].visionRange) {
-						let closestPlayer = closestPlayerResult.player;
-
-						let fight = new Fight(this.players[player], closestPlayer);
-						let fightResult = fight.getFightResult();
-
-						if(fightResult === 1 ) {
-							//Do we have a new king ?
-							if(closestPlayer.isKing) {
-                                this.setPlayerKing(this.players[player]);
-							}
-
-                            this.players[player].kills += 1;
-                            GameStatsTable.setPlayerKills(this.players[player].id, this.players[player].kills);
-							this.killPlayer(closestPlayer);
-						} else if(fightResult === -1){
-							if(this.players[player].isKing) {
-								closestPlayer.isKing = true;
-								closestPlayer.lastUsedActionProperty = 0; //reset his action proeprties
-								this.currentKing = closestPlayer;
-							}
-
-                            closestPlayer.kills += 1;
-                            GameStatsTable.setPlayerKills(closestPlayer.id, closestPlayer.kills);
-							this.killPlayer(this.players[player]);
-						} 
+					//move the players (except the king)
+					let pathToKing = this.getShortestPath(this.players[player], this.currentKing);
+					if(this.isPlayerTraped(pathToKing)) {
+						//player is traped ->  bad luck for him -> he gets killed
+						this.killPlayer(this.players[player]);
+						console.log("player is traped ->  bad luck for him -> he gets killed");
+					} else {
+						this.players[player].move(pathToKing[1][0], pathToKing[1][1], this.fieldWidth, this.fieldHeight);
 					}
 				}
 			}
+		}
 
-			//last turn -> regen health and increase counters
-			if(this.turnRounds === this.maxTurnsPerRound) {
-				for(var player in this.players) {
-					this.players[player].regenerateHealth();
+		//players start to fight or continue to fight
+		for(var player in this.players) {
+			if(!this.players[player].isKing) {
+				// is there another player in range to attack ?
+				let closestPlayerResult = this.getClosestPlayer(this.players[player]);
+				if(closestPlayerResult.distance-2 < this.players[player].visionRange) {
+					let closestPlayer = closestPlayerResult.player;
+
+					let fight = new Fight(this.players[player], closestPlayer);
+					let fightResult = fight.getFightResult();
+
+					if(fightResult === 1 ) {
+						//Do we have a new king ?
+						if(closestPlayer.isKing) {
+                            this.setPlayerKing(this.players[player]);
+						}
+
+                        this.players[player].kills += 1;
+                        GameStatsTable.setPlayerKills(this.players[player].id, this.players[player].kills);
+						this.killPlayer(closestPlayer);
+					} else if(fightResult === -1){
+						if(this.players[player].isKing) {
+							closestPlayer.isKing = true;
+							closestPlayer.lastUsedActionProperty = 0; //reset his action proeprties
+							this.currentKing = closestPlayer;
+						}
+
+                        closestPlayer.kills += 1;
+                        GameStatsTable.setPlayerKills(closestPlayer.id, closestPlayer.kills);
+						this.killPlayer(this.players[player]);
+					} 
 				}
-
-				this.turnRounds = 1;
-				this.gameRound += 1;
-			} else {
-				this.turnRounds += 1;
-			}	
+			}
 		}
 
-		if(this.ticker >= 60) {
-			this.ticker = 1;
+		//last turn -> regen health and increase counters
+		if(this.turnRounds === this.maxTurnsPerRound) {
+			for(var player in this.players) {
+				this.players[player].regenerateHealth();
+			}
+
+			this.turnRounds = 1;
+			this.gameRound += 1;
 		} else {
-			this.ticker+=1
-		}
+			this.turnRounds += 1;
+		}	
 	}
 
 	getClosestPlayer(comPlayer) {
