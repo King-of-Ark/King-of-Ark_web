@@ -18,21 +18,27 @@
   <script src="js/DeadBody.js"></script>
     <script src="js/GameStatsTable.js"></script>
 <body>
-    <h1>King of Ark</h1>
-    
-    <table class="table table-responsive" id="gameStatsTable" height="400">
-        <thead>
-            <tr>
-                <th scope="col">TransactionID</th>
-                <th scope="col">ActionProperties</th>
-                <th scope="col">Kills</th>
-                <th scope="col">Health</th>
-                <th scope="col">Life regeneration</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <h1>King of Ark Demo</h1>
+
+    <div class="container-fluid">
+      <div class="row justify-content-start">
+        <div id="gameView" class="col"> </div>
+
+        <table class="table table-responsive col" id="gameStatsTable" height="700">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">ActionProperties</th>
+                    <th scope="col">Kills</th>
+                    <th scope="col">Health [+]</th>
+                    <th scope="col">Health regen [*]</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+      </div>
+    </div>
     
     <script type="text/javascript">
             main(); 

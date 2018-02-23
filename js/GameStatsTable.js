@@ -19,7 +19,7 @@ class GameStatsTable {
         row.id = transactioID;
         
         let idCell = row.insertCell(0);
-        idCell.innerHTML = transactioID;
+        idCell.innerHTML = "TODO";
         
         let propCell = row.insertCell(1);
         propCell.innerHTML = actionProperties;

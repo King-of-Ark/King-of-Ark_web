@@ -32,7 +32,11 @@ class Battlefield {
 	*/
 	create() {
 		this.app = new PIXI.Application({width: this.pixelWidth, height: this.pixelHeight, backgroundColor: "0x6d6d6d"});
-		document.body.appendChild(this.app.view);
+
+		let gameView = document.getElementById("gameView");
+		//gameView.width = this.pixelWidth;
+		//gameView.height = this.pixelHeight;
+		gameView.appendChild(this.app.view);
 	}
 
 	/*
