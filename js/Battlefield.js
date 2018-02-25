@@ -69,14 +69,18 @@ class Battlefield {
 			for(var player in this.players) {
 				if(!this.players[player].isKing) {
 					//move the players (except the king)
-					let pathToKing = this.getShortestPath(this.players[player], this.currentKing);
-					if(this.isPlayerTraped(pathToKing)) {
-						//player is traped ->  bad luck for him -> he gets killed
-						this.killPlayer(this.players[player]);
-						console.log("player is traped ->  bad luck for him -> he gets killed");
-					} else {
-						this.players[player].move(pathToKing[1][0], pathToKing[1][1], this.fieldWidth, this.fieldHeight);
-					}
+                    if(this.players[player].pathToKing === undefined || this.players[player].pathToKing.length <= 1) {
+                        let pathToKing = this.getShortestPath(this.players[player], this.currentKing);
+                        this.players[player].pathToKing = pathToKing;
+                        if(this.isPlayerTraped(pathToKing)) {
+                            //player is traped ->  bad luck for him -> he gets killed
+                            this.killPlayer(this.players[player]);
+                            console.log("player is traped ->  bad luck for him -> he gets killed");
+                        } 
+                    } else {
+                        this.players[player].move(this.players[player].pathToKing[1][0], this.players[player].pathToKing[1][1], this.fieldWidth, this.fieldHeight);
+                        this.players[player].pathToKing.shift(); 
+                    }
 				}
 			}
 		}
@@ -131,11 +135,11 @@ class Battlefield {
 
 	getClosestPlayer(comPlayer) {
 		let closestPlayer = this.currentKing;
-		let closesDistance = this.numberOfFieldsAway(comPlayer, this.currentKing);
+		let closesDistance = this.getDistance(comPlayer.x, comPlayer.y, this.currentKing.x, this.currentKing.y);
 
 		for(var player in this.players) {
 			if(this.players[player].id !== comPlayer.id) {
-				let fieldsAway = this.numberOfFieldsAway(comPlayer, this.players[player]);
+				let fieldsAway = this.getDistance(comPlayer.x, comPlayer.y, this.players[player].x, this.players[player].y);
 				if(fieldsAway < closesDistance) {
 					closestPlayer = this.players[player];
 					closesDistance = fieldsAway;
@@ -145,6 +149,10 @@ class Battlefield {
 
 		return {"distance": closesDistance, "player": closestPlayer};
 	}
+    
+    getDistance(x1, y1, x2, y2) {
+        return Math.abs(x1-x2) + Math.abs(y1-y2);
+    }
 
 	/*
 		check if a player is 'trapped'
