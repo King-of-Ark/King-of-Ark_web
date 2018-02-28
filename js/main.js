@@ -13,7 +13,7 @@ function main(gameStats) {
 var offset = 0;
 var receivedTransactions = []
 function pullTransactions(walletAddress) {
-	httpGetAsync("167.114.29.55:4002/api/transactions?recipientId=" + walletAddress + "&offset=" + offset, function callback(text) {
+	httpGetAsync("http://167.114.29.55:4002/api/transactions?recipientId=" + walletAddress + "&offset=" + offset, function callback(text) {
     	let json = JSON.parse(text);
     	receivedTransactions.push.apply(receivedTransactions, json.transactions);
 
