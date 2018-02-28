@@ -1,6 +1,6 @@
 # King-of-Ark_web
 
-Work in progress
+Online demo: https://king-of-ark.github.io/King-of-Ark_web/
 
 ## How to add a entry?
 
