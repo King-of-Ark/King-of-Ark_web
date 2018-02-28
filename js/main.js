@@ -13,12 +13,13 @@ function main(gameStats) {
 var offset = 0;
 var receivedTransactions = []
 function pullTransactions(walletAddress) {
-	httpGetAsync("https://node1.arknet.cloud/api/transactions?recipientId=" + walletAddress + "&offset=" + offset, function callback(text) {
+	httpGetAsync("https://dexplorer.ark.io:8443/api/transactions?recipientId=" + walletAddress + "&offset=" + offset, function callback(text) {
     	let json = JSON.parse(text);
     	receivedTransactions.push.apply(receivedTransactions, json.transactions);
 
     	offset += 50;
-    	if(offset >= json.count) {
+
+    	if(offset >= json.count || json.count === undefined) {
     		let helper = new Helper();
 
     		//init the battlefield
@@ -26,6 +27,7 @@ function pullTransactions(walletAddress) {
     		battlefield.create();
     		
     		//add the stones from the first entry
+            alert(receivedTransactions[0]);
     		battlefield.createStones(new ArkTransaction(receivedTransactions[0]));		
 
     		//add the players to the battlefield and to the gameStats
@@ -38,7 +40,6 @@ function pullTransactions(walletAddress) {
     				battlefield.add(player);
     			}
     		}
-
     		
     		battlefield.start();
     	} else {
