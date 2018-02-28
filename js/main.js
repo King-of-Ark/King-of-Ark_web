@@ -27,7 +27,6 @@ function pullTransactions(walletAddress) {
     		battlefield.create();
     		
     		//add the stones from the first entry
-            alert(receivedTransactions[0]);
     		battlefield.createStones(new ArkTransaction(receivedTransactions[0]));		
 
     		//add the players to the battlefield and to the gameStats
